@@ -1,0 +1,46 @@
+type Gradient{
+  _id: ID!
+  name: String!
+  params: GradientParams!
+  comments: [Comment!]!
+}
+
+type GradientParams{
+  x: Int!
+  y: Int!
+  stops: [String!]!
+}
+
+type Comment{
+  body: String!
+}
+
+type Query{
+  gradient(id: String!): Gradient!
+  gradients: [Gradient!]!
+}
+
+input NewGradient{
+  name: String!
+  params: NewParams! = {
+    x: 256
+    y: 256
+    stops: []
+  }
+}
+
+input NewParams{
+  x: Int! = 256
+  y: Int! = 256
+  stops: [String!]
+}
+
+input NewComment{
+  _id: String!
+  comment: String!
+}
+
+type Mutation{
+  createGradient(input: NewGradient): Gradient!
+  comment(input: NewComment): Gradient!
+}
